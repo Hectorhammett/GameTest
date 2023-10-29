@@ -1,0 +1,98 @@
+[gd_scene load_steps=8 format=3 uid="uid://2x7ejwii70d0"]
+
+[ext_resource type="PackedScene" uid="uid://dcsf2j74ekmhc" path="res://Player.tscn" id="1_f53s5"]
+[ext_resource type="PackedScene" uid="uid://m4y63pnh16p7" path="res://enemy/blob.tscn" id="2_e6yem"]
+[ext_resource type="PackedScene" uid="uid://bg4vqqb5uf3jf" path="res://lamp.tscn" id="3_rdu28"]
+[ext_resource type="Texture2D" uid="uid://da0262755oq2" path="res://art/light/bricks.jpg" id="4_7oapb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hbkuw"]
+size = Vector2(1277, 63)
+
+[sub_resource type="Gradient" id="Gradient_10xby"]
+offsets = PackedFloat32Array(0.994012)
+colors = PackedColorArray(0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0ckxr"]
+gradient = SubResource("Gradient_10xby")
+
+[node name="Stage" type="Node"]
+
+[node name="background" type="Sprite2D" parent="."]
+position = Vector2(240, 241)
+texture = ExtResource("4_7oapb")
+
+[node name="background2" type="Sprite2D" parent="."]
+position = Vector2(719, 240)
+texture = ExtResource("4_7oapb")
+
+[node name="background3" type="Sprite2D" parent="."]
+position = Vector2(1199, 239)
+texture = ExtResource("4_7oapb")
+
+[node name="background4" type="Sprite2D" parent="."]
+position = Vector2(240, 719)
+texture = ExtResource("4_7oapb")
+
+[node name="background5" type="Sprite2D" parent="."]
+position = Vector2(720, 720)
+texture = ExtResource("4_7oapb")
+
+[node name="background6" type="Sprite2D" parent="."]
+position = Vector2(1200, 720)
+texture = ExtResource("4_7oapb")
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(32, 686)
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+position = Vector2(607.5, 0.5)
+shape = SubResource("RectangleShape2D_hbkuw")
+
+[node name="Sprite2D" type="Sprite2D" parent="Floor"]
+position = Vector2(608, 0)
+scale = Vector2(20, 1)
+texture = SubResource("GradientTexture2D_0ckxr")
+
+[node name="Player" parent="." instance=ExtResource("1_f53s5")]
+position = Vector2(289, 623)
+
+[node name="blob" parent="." instance=ExtResource("2_e6yem")]
+position = Vector2(954, 237)
+
+[node name="blob2" parent="." instance=ExtResource("2_e6yem")]
+position = Vector2(542, 192)
+
+[node name="blob3" parent="." instance=ExtResource("2_e6yem")]
+position = Vector2(850, 139)
+
+[node name="blob4" parent="." instance=ExtResource("2_e6yem")]
+position = Vector2(87.0001, 358)
+
+[node name="blob5" parent="." instance=ExtResource("2_e6yem")]
+position = Vector2(678, 67)
+
+[node name="blob6" parent="." instance=ExtResource("2_e6yem")]
+position = Vector2(1199, 68)
+
+[node name="lamp" parent="." instance=ExtResource("3_rdu28")]
+position = Vector2(195, 95)
+
+[node name="lamp2" parent="." instance=ExtResource("3_rdu28")]
+position = Vector2(1025, 96)
+
+[node name="PointLight2D" parent="lamp2" index="0"]
+color = Color(0.215686, 0.541176, 0, 1)
+
+[node name="CanvasModulate" type="CanvasModulate" parent="."]
+color = Color(0, 0.533333, 0.886275, 1)
+
+[connection signal="player_hit" from="blob" to="Player" method="_on_blob_player_hit"]
+[connection signal="player_hit" from="blob2" to="Player" method="_on_blob_player_hit"]
+[connection signal="player_hit" from="blob3" to="Player" method="_on_blob_player_hit"]
+[connection signal="player_hit" from="blob4" to="Player" method="_on_blob_player_hit"]
+[connection signal="player_hit" from="blob5" to="Player" method="_on_blob_player_hit"]
+[connection signal="player_hit" from="blob6" to="Player" method="_on_blob_player_hit"]
+
+[editable path="lamp2"]

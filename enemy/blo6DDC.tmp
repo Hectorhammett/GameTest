@@ -1,0 +1,88 @@
+[gd_scene load_steps=11 format=3 uid="uid://m4y63pnh16p7"]
+
+[ext_resource type="Texture2D" uid="uid://eh6m53d813p4" path="res://art/blob/w1.png" id="1_kgodh"]
+[ext_resource type="Script" path="res://enemy/blob.gd" id="1_s5kkx"]
+[ext_resource type="Texture2D" uid="uid://cwiauqji1xe4t" path="res://art/blob/w2.png" id="2_7uj2x"]
+[ext_resource type="Texture2D" uid="uid://1yjhtnwhwovl" path="res://art/blob/b2.png" id="2_f08wj"]
+[ext_resource type="Texture2D" uid="uid://dqr5bji8vsdrj" path="res://art/blob/d1.png" id="4_7lm4h"]
+[ext_resource type="Texture2D" uid="uid://dhdu3dkoy7h6m" path="res://art/blob/d2.png" id="5_5ee8q"]
+[ext_resource type="Texture2D" uid="uid://dyl7cfduhcimi" path="res://art/blob/b1.png" id="6_cme2r"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_faxuc"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_f08wj")
+}],
+"loop": true,
+"name": &"falling",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_7uj2x")
+}],
+"loop": true,
+"name": &"jumping",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_7lm4h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_5ee8q")
+}],
+"loop": true,
+"name": &"landed",
+"speed": 10.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_kgodh")
+}],
+"loop": true,
+"name": &"on_air",
+"speed": 0.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("6_cme2r")
+}],
+"loop": true,
+"name": &"on_floor",
+"speed": 0.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qvrlt"]
+size = Vector2(134, 109)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bt113"]
+size = Vector2(134.286, 108.571)
+
+[node name="blob" type="CharacterBody2D" groups=["enemies"]]
+scale = Vector2(0.35, 0.35)
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_s5kkx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_faxuc")
+animation = &"landed"
+autoplay = "landed"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -0.5)
+shape = SubResource("RectangleShape2D_qvrlt")
+
+[node name="AnimationTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(1.42858, 8.17435e-06)
+shape = SubResource("RectangleShape2D_bt113")
+
+[connection signal="timeout" from="AnimationTimer" to="." method="_on_animation_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
