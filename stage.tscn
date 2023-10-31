@@ -82,6 +82,9 @@ position = Vector2(945, 554)
 [node name="blob8" parent="." instance=ExtResource("2_e6yem")]
 position = Vector2(597, 314)
 
+[node name="blob9" parent="." instance=ExtResource("2_e6yem")]
+position = Vector2(445, 482)
+
 [node name="lamp" parent="." instance=ExtResource("3_rdu28")]
 position = Vector2(195, 95)
 
