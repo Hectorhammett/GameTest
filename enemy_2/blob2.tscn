@@ -1,18 +1,18 @@
-[gd_scene load_steps=12 format=3 uid="uid://m4y63pnh16p7"]
+[gd_scene load_steps=13 format=3 uid="uid://pyjwus2s0qnn"]
 
-[ext_resource type="Texture2D" uid="uid://eh6m53d813p4" path="res://art/blob/w1.png" id="1_kgodh"]
-[ext_resource type="Script" path="res://enemy/blob.gd" id="1_s5kkx"]
-[ext_resource type="Texture2D" uid="uid://cwiauqji1xe4t" path="res://art/blob/w2.png" id="2_7uj2x"]
-[ext_resource type="Texture2D" uid="uid://1yjhtnwhwovl" path="res://art/blob/b2.png" id="2_f08wj"]
-[ext_resource type="Texture2D" uid="uid://dqr5bji8vsdrj" path="res://art/blob/d1.png" id="4_7lm4h"]
-[ext_resource type="Texture2D" uid="uid://dhdu3dkoy7h6m" path="res://art/blob/d2.png" id="5_5ee8q"]
-[ext_resource type="Texture2D" uid="uid://dyl7cfduhcimi" path="res://art/blob/b1.png" id="6_cme2r"]
+[ext_resource type="Script" path="res://enemy_2/blob2.gd" id="1_x7x1x"]
+[ext_resource type="Texture2D" uid="uid://1yjhtnwhwovl" path="res://art/blob/b2.png" id="2_kor3u"]
+[ext_resource type="Texture2D" uid="uid://cwiauqji1xe4t" path="res://art/blob/w2.png" id="3_gkniq"]
+[ext_resource type="Texture2D" uid="uid://dqr5bji8vsdrj" path="res://art/blob/d1.png" id="4_wn454"]
+[ext_resource type="Texture2D" uid="uid://dhdu3dkoy7h6m" path="res://art/blob/d2.png" id="5_544ir"]
+[ext_resource type="Texture2D" uid="uid://eh6m53d813p4" path="res://art/blob/w1.png" id="6_hq6vn"]
+[ext_resource type="Texture2D" uid="uid://dyl7cfduhcimi" path="res://art/blob/b1.png" id="7_6y8ah"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_faxuc"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_f08wj")
+"texture": ExtResource("2_kor3u")
 }],
 "loop": true,
 "name": &"falling",
@@ -20,7 +20,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("2_7uj2x")
+"texture": ExtResource("3_gkniq")
 }],
 "loop": true,
 "name": &"jumping",
@@ -28,10 +28,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_7lm4h")
+"texture": ExtResource("4_wn454")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_5ee8q")
+"texture": ExtResource("5_544ir")
 }],
 "loop": true,
 "name": &"landed",
@@ -39,7 +39,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("1_kgodh")
+"texture": ExtResource("6_hq6vn")
 }],
 "loop": true,
 "name": &"on_air",
@@ -47,7 +47,7 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("6_cme2r")
+"texture": ExtResource("7_6y8ah")
 }],
 "loop": true,
 "name": &"on_floor",
@@ -55,10 +55,10 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": ExtResource("4_7lm4h")
+"texture": ExtResource("4_wn454")
 }, {
 "duration": 1.0,
-"texture": ExtResource("5_5ee8q")
+"texture": ExtResource("5_544ir")
 }],
 "loop": true,
 "name": &"stuned",
@@ -74,11 +74,14 @@ size = Vector2(134.286, 108.571)
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_gcowy"]
 polygon = PackedVector2Array(-65.7143, -11.4286, -14.2857, -51.4286, 22.8571, -51.4286, 42.8571, -40, 54.2857, -31.4286, 65.7143, -11.4286, 65.7143, 31.4286, 45.7143, 48.5714, -45.7143, 48.5714, -65.7143, 28.5714)
 
-[node name="blob" type="CharacterBody2D" groups=["enemies"]]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_23e25"]
+size = Vector2(977.143, 365.714)
+
+[node name="blob2" type="CharacterBody2D" groups=["enemies"]]
 scale = Vector2(0.35, 0.35)
 collision_layer = 4
 collision_mask = 10
-script = ExtResource("1_s5kkx")
+script = ExtResource("1_x7x1x")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_faxuc")
@@ -101,8 +104,22 @@ position = Vector2(1.42858, 8.17435e-06)
 shape = SubResource("RectangleShape2D_bt113")
 
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+visible = false
 occluder = SubResource("OccluderPolygon2D_gcowy")
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 3
+collide_with_areas = true
+
+[node name="VissionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="VissionArea"]
+position = Vector2(-2.17983e-05, -131.429)
+scale = Vector2(0.999999, 0.999999)
+shape = SubResource("RectangleShape2D_23e25")
 
 [connection signal="timeout" from="AnimationTimer" to="." method="_on_animation_timer_timeout"]
 [connection signal="area_entered" from="Area2D" to="." method="_on_area_2d_area_entered"]
 [connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="VissionArea" to="." method="_on_vission_area_body_entered"]
+[connection signal="body_exited" from="VissionArea" to="." method="_on_vission_area_body_exited"]
